@@ -1,40 +1,22 @@
-function HomePage() {
-  return <div>Welcome to Next.js!</div>
-}
+export async function getStaticProps(context) {
+  console.log("hi getStaticProps");
 
-export default HomePage
-import Head from "next/head";
-import Image from "next/image";
-import styles from "../styles/Home.module.css";
+  const options = {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      Authorization: "<add your foursquare token here>",
+    },
+  };
 
-import Banner from "../components/banner";
-export default function Home() {
-          buttonText="View stores nearby"
-          handleOnClick={handleOnBannerBtnClick}
-        />
-        <div className={styles.heroImage}>
-          <Image src="/static/hero-image.png" width={700} height={400} />
-        </div>
-      </main>
-    </div>
-  );
-import styles from "../styles/Home.module.css";
+  fetch(
+    "https://api.foursquare.com/v3/places/search?query=coffee&ll=43.653833032607096%2C-79.37896808855945&limit=6",
+    options
+  )
+    .then((response) => response.json())
+    .then((response) => console.log(response))
+    .catch((err) => console.error(err));
 
-import Banner from "../components/banner";
-import Card from "../components/card";
-
-export default function Home() {
-const handleOnBannerBtnClick = () => {
-export default function Home() {
-        <div className={styles.heroImage}>
-          <Image src="/static/hero-image.png" width={700} height={400} />
-        </div>
-        <Card
-          name="DarkHorse Coffee"
-          imgUrl="/static/hero-image.png"
-          href="/coffee-store/darkhose-coffee"
-        />
-      </main>
-    </div>
-  );
-
+  return {
+    props: {
+      coffeeStores: coffeeStoresData,
