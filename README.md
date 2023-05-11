@@ -23,3 +23,29 @@ Fallback Key: it is the key though which we can see what happens when you try to
 
 Fallback: False with 404 page
 if the page of the route value is 300, 500 whatever the dynamic value it does exists when changed from route 1 to 300 it returns an error of 404. It is because it is not the part of get static path.
+
+(99) *Important Note for unsplash API
+While using the unsplash API you nrrd to keep in mind some of the following
+API key
+Rate limit
+Attribution
+Usage guidelines 
+Permissions
+
+(100) *Setup in Unsplash API
+Connecting the coffee store images in our app.
+
+(101) *Invoke Unsplash API
+Initializing the unsplash API in the code.
+
+(102) *Invoke Unsplash API for coffee store
+Installation - 
+npm i -- save unsplash-js
+In the local env create the unsplash API.
+
+(103) *Update coffee store wth image 
+Documentation
+eneter the query i.e. coffee shop, provide the color
+In The API response we do get the result back in the array & we also need to get back the 1st item.
+
+(104) *The unsplash API per page has to be set by 30
