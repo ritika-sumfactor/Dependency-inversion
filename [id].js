@@ -1,25 +1,45 @@
+import { useRouter } from "next/router";
+import Link from "next/link";
+import Head from "next/head";
+import Image from "next/image";
 import cls from "classnames";
-
-import coffeeStoresData from "../../data/coffee-stores.json";
 
 import styles from "../../styles/coffee-store.module.css";
 
 import { fetchCoffeeStores } from "../../lib/coffee-stores";
-@@ -19,7 +17,7 @@ export async function getStaticProps(staticProps) {
+
+export async function getStaticProps(staticProps) {
+  const params = staticProps.params;
+  console.log("params", params);
+
+  const coffeeStores = await fetchCoffeeStores();
+  const findCoffeeStoreById = coffeeStores.find((coffeeStore) => {
+    return coffeeStore.id.toString() === params.id; //dynamic id
+  });
   return {
     props: {
       coffeeStore: coffeeStores.find((coffeeStore) => {
-        return coffeeStore.fsq_id.toString() === params.id; //dynamic id
         return coffeeStore.id.toString() === params.id; //dynamic id
       }),
+      coffeeStore: findCoffeeStoreById ? findCoffeeStoreById : {},
     },
   };
-@@ -30,7 +28,7 @@ export async function getStaticPaths() {
+}
+export async function getStaticPaths() {
+  const coffeeStores = await fetchCoffeeStores();
   const paths = coffeeStores.map((coffeeStore) => {
     return {
       params: {
-        id: coffeeStore.fsq_id.toString(),
         id: coffeeStore.id.toString(),
       },
     };
   });
+  return {
+    paths,
+    fallback: true,
+  };
+}
+const CoffeeStore = (props) => {
+  const router = useRouter();
+  if (router.isFallback) {
+    return <div>Loading...</div>;
