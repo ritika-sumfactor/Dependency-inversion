@@ -7,4 +7,4 @@ Geolocation API is a browser API that provides access to location-based services
 114 - The use of hook for retriving the users location
 115 - UseEffect
 useEffect is a built-in hook that allows you to perform side effects in a function component. Side effects are actions that affect things outside the scope of the current function, such as fetching data from an API, updating the DOM, or setting up event listeners.
-116- ClientSide rendering
+116- ClientSide rendering.
