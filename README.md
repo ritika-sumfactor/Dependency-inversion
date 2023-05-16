@@ -9,6 +9,7 @@
 
 130-Hello.js Api Routes
 *There are 2 rules of Routing
+
 (i) Pages need to be a react component
 (ii)Components need to be supported by default
 *Rules of Api routes
@@ -16,6 +17,7 @@
 131- How to create a serverless Function
 
 132- Solution
+
 *(i)Choose a serverless function provider
  (ii)Create a new function
  (iii)Write the function code
