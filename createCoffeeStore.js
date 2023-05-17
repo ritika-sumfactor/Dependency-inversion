@@ -4,43 +4,41 @@ const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(
 );
 const table = base("coffee-stores");
 console.log({ table });
-
 const createCoffeeStore = async (req, res) => {
   console.log({ req });
-
   if (req.method === "POST") {
     //find a record
-
-    const findCoffeeStoreRecords = await table
-      .select({
-        filterByFormula: `id="0"`,
-      })
-      .firstPage();
     try {
       const findCoffeeStoreRecords = await table
         .select({
           filterByFormula: `id="59f784dd28122f14f9d5d63d"`,
+          filterByFormula: `id="999"`,
         })
         .firstPage();
+      const createCoffeeStore = async (req, res) => {
+        res.json(records);
+      } else {
+        //create a record
+        res.json({ message: "create a record" });
+        const createRecords = await table.create([
+          {
+            fields: {
+              id: "999",
+              name: "My favourite Coffee Store",
+              address: "my address",
+              neighbourhood: "some neighbourhood",
+              voting: 200,
+              imgUrl: "http://myimage.com",
+            },
+          },
+        ]);
 
-    console.log({ findCoffeeStoreRecords });
-      console.log({ findCoffeeStoreRecords });
-
-    if (findCoffeeStoreRecords.length !== 0) {
-      res.json(findCoffeeStoreRecords);
-    } else {
-      //create a record
-      res.json({ message: "create a record" });
-      if (findCoffeeStoreRecords.length !== 0) {
-        const records = findCoffeeStoreRecords.map((record) => {
+        const records = createRecords.map((record) => {
           return {
             ...record.fields,
           };
         });
         res.json(records);
-      } else {
-        //create a record
-        res.json({ message: "create a record" });
       }
     } catch (err) {
       console.error("Error finding store", err);
