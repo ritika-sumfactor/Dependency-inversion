@@ -1,3 +1,11 @@
 10- Data Storage using Airtable
 
-138- Project Architecture
+*Project Architecture
+
+*What is Airtable
+
+*Setup Airtable
+
+*Api Library
+
+*Serverless Functions
