@@ -1,32 +1,27 @@
-import { table, getMinifiedRecords } from "../../lib/airtable";
 import { findRecordByFilter } from "../../lib/airtable";
 
-const getCoffeeStoreById = async (req, res) => {
-  const { id } = req.query;
+const favouriteCoffeeStoreById = async (req, res) => {
+  if (req.method === "PUT") {
+    try {
+      const { id } = req.body;
 
-  try {
-    if (id) {
-      const findCoffeeStoreRecords = await table
-        .select({
-          filterByFormula: `id="${id}"`,
-        })
-        .firstPage();
-      const records = await findRecordByFilter(id);
+      if (id) {
+        const records = await findRecordByFilter(id);
 
-      if (findCoffeeStoreRecords.length !== 0) {
-        const records = getMinifiedRecords(findCoffeeStoreRecords);
-      if (records.length !== 0) {
-        res.json(records);
+        if (records.length !== 0) {
+          res.json(records);
+        } else {
+          res.json({ message: "Coffee store id doesn't exist", id });
+        }
       } else {
-        res.json({ message: `id could not be found` });
+        res.status(400);
+        res.json({ message: "Id is missing" });
       }
-    } else {
-      res.status(400);
-      res.json({ message: "Id is missing" });
+    } catch (error) {
+      res.status(500);
+      res.json({ message: "Error upvoting coffee store", error });
     }
-  } catch (error) {
-    res.status(500);
-    res.json({ message: "Something went wrong", error });
   }
 };
-export default getCoffeeStoreById;
+
+export default favouriteCoffeeStoreById;
