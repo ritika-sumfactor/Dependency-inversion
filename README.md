@@ -1,3 +1,3 @@
-10- Data Storage using Airtable
+12- *Deployment & Build Optimization
 
-138- Project Architecture
+173-*What is deployment?
