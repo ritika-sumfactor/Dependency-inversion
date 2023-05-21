@@ -35,20 +35,12 @@ export async function getStaticPaths() {
     fallback: true,
   };
 }
-
 const CoffeeStore = (initialProps) => {
   const router = useRouter();
-  if (router.isFallback) {
-    return <div>Loading...</div>;
-  }
-
   const id = router.query.id;
-
-  const [coffeeStore, setCoffeeStore] = useState(initialProps.coffeeStore);
   const [coffeeStore, setCoffeeStore] = useState(
     initialProps.coffeeStore || {}
   );
-
   const {
     state: { coffeeStores },
   } = useContext(StoreContext);
@@ -87,11 +79,7 @@ const CoffeeStore = (initialProps) => {
       // SSG
       handleCreateCoffeeStore(initialProps.coffeeStore);
     }
-  }, [id, initialProps.coffeeStore]);
-
-  const { name, address, neighbourhood, imgUrl } = coffeeStore;
   }, [id, initialProps.coffeeStore, coffeeStores]);
-
   const {
     name = "",
     address = "",
@@ -99,7 +87,6 @@ const CoffeeStore = (initialProps) => {
     imgUrl = "",
   } = coffeeStore;
   const [votingCount, setVotingCount] = useState(0);
-
   const { data, error } = useSWR(`/api/getCoffeeStoreById?id=${id}`, fetcher);
   useEffect(() => {
     if (data && data.length > 0) {
@@ -107,11 +94,9 @@ const CoffeeStore = (initialProps) => {
       setVotingCount(data[0].voting);
     }
   }, [data]);
-
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
-
   const handleUpvoteButton = async () => {
     try {
       const response = await fetch("/api/favouriteCoffeeStoreById", {
@@ -139,6 +124,7 @@ const CoffeeStore = (initialProps) => {
     <div className={styles.layout}>
       <Head>
         <title>{name}</title>
+        <meta name="description" content={`${name} coffee store`} />
       </Head>
       <div className={styles.container}>
         <div className={styles.col1}>
@@ -164,7 +150,6 @@ const CoffeeStore = (initialProps) => {
         <div className={cls("glass", styles.col2)}>
           {address && (
             <div className={styles.iconWrapper}>
-              <Image src="/static/icons/places.svg" width="24" height="24" />
               <Image
                 src="/static/icons/places.svg"
                 width="24"
@@ -176,7 +161,6 @@ const CoffeeStore = (initialProps) => {
           )}
           {neighbourhood && (
             <div className={styles.iconWrapper}>
-              <Image src="/static/icons/nearMe.svg" width="24" height="24" />
               <Image
                 src="/static/icons/nearMe.svg"
                 width="24"
@@ -187,7 +171,6 @@ const CoffeeStore = (initialProps) => {
             </div>
           )}
           <div className={styles.iconWrapper}>
-            <Image src="/static/icons/star.svg" width="24" height="24" />
             <Image
               src="/static/icons/star.svg"
               width="24"
@@ -196,7 +179,6 @@ const CoffeeStore = (initialProps) => {
             />
             <p className={styles.text}>{votingCount}</p>
           </div>
-
           <button className={styles.upvoteButton} onClick={handleUpvoteButton}>
             Up vote!
           </button>
